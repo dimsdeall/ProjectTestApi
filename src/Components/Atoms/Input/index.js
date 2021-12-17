@@ -7,6 +7,12 @@ export default function Input(props) {
             <TextInput
                 style={styles.input}
                 secureTextEntry={props.password}
+                placeholder={props.placeholder}
+                placeholderTextColor={'#71BEB9'}
+                ref={props.refs}
+                onSubmitEditing={() => props.onSubmit()}
+                onChangeText={text => props.onChange(text)}
+                value={props.value}
             />
         </View>
     )
@@ -15,13 +21,12 @@ export default function Input(props) {
 const styles = StyleSheet.create({
     wrapper: {
         margin:10,
-        width:'60%'
+        flex:7
     }, input: {
-        // backgroundColor: 'white',
         fontSize:16,
         padding: 2,
-        color: 'black',
-        borderBottomColor: 'black',
+        color: 'white',
+        borderBottomColor: '#bafffb',
         borderBottomWidth: 1,
         width:'100%'
     }

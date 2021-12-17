@@ -6,14 +6,20 @@ export default function InputGroup(props) {
     return (
         <View style={styles.wrapper}>
             <Label text={props.text} />
-            <Input password={props.password} />
+            <Input
+                password={props.password}
+                placeholder={props.placeholder}
+                onChange={props.onChange}
+                refs={props.refs}
+                onSubmit={props.onSubmit}
+                value={props.value}
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     wrapper: {
-        // backgroundColor: 'green',
         marginHorizontal: 10,
         marginBottom: 10,
         display: 'flex',
