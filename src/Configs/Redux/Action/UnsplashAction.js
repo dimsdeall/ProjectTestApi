@@ -1,9 +1,7 @@
 import axios from "axios"
 import { ENDPOINT_UNSPLASH, CLIENT_ID } from "@env"
 
-
-
-export const  SearchImage = (search, page) => (dispatch) => {
+export const SearchImage = (search, page) => (dispatch) => {
     axios.get(ENDPOINT_UNSPLASH,
         {
             params: {
@@ -14,12 +12,13 @@ export const  SearchImage = (search, page) => (dispatch) => {
             }
         })
         .then(res => {
-            dispatch({type : 'UPDATE_DATA', payload : res.data.results})
+            dispatch({ type: 'RENDER_PAGE', payload: false })
+            dispatch({ type: 'UPDATE_DATA', payload: res.data.results })
         })
         .catch(err => console.log(err + ' ini'))
 }
 
-export const  NextPage = (search, page,data) => (dispatch) => {
+export const NextPage = (search, page, data) => (dispatch) => {
     axios.get(ENDPOINT_UNSPLASH,
         {
             params: {
@@ -30,7 +29,8 @@ export const  NextPage = (search, page,data) => (dispatch) => {
             }
         })
         .then(res => {
-            dispatch({type : 'ADD_PAGE', payload : [...data,...res.data.results]})
+            console.log(res);
+            dispatch({ type: 'ADD_PAGE', payload: [...data, ...res.data.results] })
         })
         .catch(err => console.log(err))
 }

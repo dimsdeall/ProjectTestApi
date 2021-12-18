@@ -1,7 +1,8 @@
 const initialState = {
     login: false,
     Splash: true,
-    UserSession: []
+    UserSession: '',
+    validLogin: false,
 }
 
 
@@ -19,6 +20,11 @@ const GlobalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 Splash: action.payload
+            }
+        case "VALID_LOGIN":
+            return {
+                ...state,
+                validLogin: action.payload
             }
         default:
             return state

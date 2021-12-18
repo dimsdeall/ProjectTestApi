@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 export default function Card(props) {
-    console.log(props.item);
     return (
         <View style={styles.card}>
             <View style={styles.cardBody}>
@@ -12,7 +11,7 @@ export default function Card(props) {
                 <Image style={styles.imageProfile} source={{ uri: props.item.user.profile_image.small }} />
                 <Text style={styles.cardTitleText}>{props.item.user.name}</Text>
             </View>
-            <Text>{props.item.alt_description}</Text>
+            <Text numberOfLines={1}>{props.item.alt_description}</Text>
         </View>
     )
 }
@@ -21,10 +20,12 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: 'white',
         marginHorizontal: 10,
-        marginBottom: 10,
+        marginTop: 10,
         padding: 10,
         borderRadius:10,
-        display: 'flex'
+        display: 'flex',
+        borderWidth:0.5,
+        borderColor:'#14A39A',
     },
     cardTitle: {
         display: 'flex',

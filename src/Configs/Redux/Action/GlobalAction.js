@@ -5,20 +5,23 @@ import { ENDPOINT_DASHBOARD } from "@env"
 export const retrieveUserSession = () => async (dispatch) => {
     try {
         const session = await EncryptedStorage.getItem("user_session");
-        console.log(session);
         setTimeout(() => {
 
             if (session === null) {
-                return dispatch({ type: 'LOGIN_CHANGE', payload: {
-                    status: false,
-                    UserSession: []
-                } })
+                return dispatch({
+                    type: 'LOGIN_CHANGE', payload: {
+                        status: false,
+                        UserSession: []
+                    }
+                })
             }
-            
-            return dispatch({ type: 'LOGIN_CHANGE', payload: {
-                status: true,
-                UserSession: session
-            } })
+
+            return dispatch({
+                type: 'LOGIN_CHANGE', payload: {
+                    status: true,
+                    UserSession: session
+                }
+            })
         }, 2000);
     } catch (error) {
         console.log(error);
@@ -32,6 +35,7 @@ async function storeUserSession(data) {
             JSON.stringify({
                 token: data.token,
                 username: data.username,
+                email: data.email,
                 role: data.role,
                 avatar: data.avatar
             })
@@ -52,21 +56,29 @@ export const loginAPI = (payload) => (dispatch) => {
                 let UserSession = {
                     token: data.jwt,
                     username: data.user.username,
+                    email: data.user.email,
                     role: data.user.role,
                     avatar: data.user.avatar.url
                 }
 
                 storeUserSession(UserSession)
-
-                return dispatch({ type: 'LOGIN_CHANGE', payload: {
-                    status: true,
-                    UserSession
-                } })
+                dispatch({ type: 'VALID_LOGIN', payload: false })
+                return dispatch({
+                    type: 'LOGIN_CHANGE', payload: {
+                        status: true,
+                        UserSession
+                    }
+                })
             } else {
-                console.log('fail');
+                dispatch({ type: 'SPLASH_CHANGE', payload: false })
+                return dispatch({ type: 'VALID_LOGIN', payload: true })
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            // console.log(err)
+            dispatch({ type: 'SPLASH_CHANGE', payload: false })
+            return dispatch({ type: 'VALID_LOGIN', payload: true })
+        })
 }
 
 
@@ -75,10 +87,12 @@ export const Logout = () => async (dispatch) => {
         await EncryptedStorage.clear();
 
         setTimeout(() => {
-            return dispatch({ type: 'LOGIN_CHANGE', payload: {
-                status: false,
-                UserSession: []
-            } })
+            return dispatch({
+                type: 'LOGIN_CHANGE', payload: {
+                    status: false,
+                    UserSession: ''
+                }
+            })
         }, 2000);
     } catch (error) {
         console.log(error);

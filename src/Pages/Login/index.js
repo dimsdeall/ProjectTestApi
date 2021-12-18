@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react'
-import { AsyncStorage, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BtnComponent, InputGroup } from '../../Components'
 import { loginAPI } from '../../Configs/Redux/Action/GlobalAction'
 
 const Login = ({ navigate }) => {
     // const [Email, setEmail] = useState('')
     // const [Password, setPassword] = useState('')
+    const { validLogin } = useSelector(state => state.GlobalReducer)
     const [Email, setEmail] = useState('testing@nyonyaa.com')
     const [Password, setPassword] = useState('Ny0ny4')
     const user = useRef();
@@ -17,12 +18,18 @@ const Login = ({ navigate }) => {
 
     const submit = () => {
         dispatch({ type: 'SPLASH_CHANGE', payload: true })
-        dispatch(loginAPI({Email,Password}), dispatch)
+        dispatch(loginAPI({ Email, Password }), dispatch)
     }
     return (
         <SafeAreaView style={styles.layout}>
-            <Text style={styles.textBaner}>Unsplash API</Text>
+            <Image style={styles.image} source={require('../../Assets/Icon/photo-camera.png')} />
+            <Text style={styles.textBaner}>Unsplash Nyonyaa API</Text>
             <View style={styles.wrapper}>
+                {
+                    (validLogin) ?
+                        <Text style={styles.text}>*Username dan password tidak sesuai</Text>
+                        : null
+                }
                 <InputGroup
                     text='Email'
                     placeholder='test@example.com'
@@ -68,5 +75,18 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: 'white'
 
+    },
+    text: {
+        color: 'red',
+        alignSelf: 'center',
+        backgroundColor: 'rgba(65, 168, 162, 1)',
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        borderRadius: 10
+    },
+    image:{
+        height:100,
+        width:100,
+        alignSelf:'center'
     }
 })
