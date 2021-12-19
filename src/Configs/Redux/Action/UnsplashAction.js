@@ -29,7 +29,6 @@ export const NextPage = (search, page, data) => (dispatch) => {
             }
         })
         .then(res => {
-            console.log(res);
             dispatch({ type: 'ADD_PAGE', payload: [...data, ...res.data.results] })
         })
         .catch(err => console.log(err))

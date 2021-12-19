@@ -23,6 +23,7 @@ export default function Account() {
     }
 
     BackHandler.addEventListener("hardwareBackPress", ()=> exit())
+    
     return (
         <View style={styles.layout}>
             <UserProfile image={Session.avatar} username={Session.username} />

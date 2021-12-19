@@ -6,11 +6,11 @@ import { BtnComponent, InputGroup } from '../../Components'
 import { loginAPI } from '../../Configs/Redux/Action/GlobalAction'
 
 const Login = ({ navigate }) => {
-    // const [Email, setEmail] = useState('')
-    // const [Password, setPassword] = useState('')
+    const [Email, setEmail] = useState('')
+    const [Password, setPassword] = useState('')
     const { validLogin } = useSelector(state => state.GlobalReducer)
-    const [Email, setEmail] = useState('testing@nyonyaa.com')
-    const [Password, setPassword] = useState('Ny0ny4')
+    // const [Email, setEmail] = useState('testing@nyonyaa.com')
+    // const [Password, setPassword] = useState('Ny0ny4')
     const user = useRef();
     const pass = useRef();
     const dispatch = useDispatch()
